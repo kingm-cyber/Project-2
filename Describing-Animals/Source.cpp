@@ -35,14 +35,24 @@ public:
 	Animal(string n) : animalName(n) {};
 	
 	//functions
-	void makeSound(void) 
+	virtual void animalSound(void) 
 	{
-		cout << animalName << " goes: NOISE" << endl;
+		cout << animalName << " goes: ..." << endl;
 	}
 
-	string getName(void) 
+	void makeAnimalSound(void) 
 	{
-		return animalName;
+		animalSound();
+	}
+
+	virtual void printAnimalName(void) 
+	{
+		cout << "This is: " << animalName << endl;
+	}
+
+	void getAnimalName(void) 
+	{
+		printAnimalName();
 	}
 
 };
@@ -51,8 +61,9 @@ public:
 class Canine : public Animal {
 protected:
 
-	//think of a new attribute unique to canines but not all other animals
-	//could be general information about canines (call it like canine general info) (or something like sharp teeth)
+	string generalInfo = "Canines have a general lifespan of 10-13 years, and sleep around 12-14 hours per day.";
+	string canineFunFact = "Fun Fact: there are around 36 living species in the caninae family.";
+	string physicalDescription = "Canines typically have sharp teeth, long bushy tails, and lots of fur.";
 
 public:
 	
@@ -60,9 +71,24 @@ public:
 	Canine(string n) : Animal(n) {};
 
 	//functions
-	void makeSound(void) 
+	void animalSound(void) 
 	{
 		cout << animalName << " goes: GRRRR!" << endl;
+	}
+
+	void getGeneralInfo(void) 
+	{
+		cout << generalInfo << endl;
+	}
+
+	void getCanineFunFact(void) 
+	{
+		cout << canineFunFact << endl;
+	}
+
+	void getPhysicalDescription(void) 
+	{
+		cout << physicalDescription << endl;
 	}
 
 };
@@ -79,7 +105,7 @@ public:
 	Dog(string n) : Canine(n) {};
 
 	//functions
-	void makeSound(void) 
+	void animalSound(void) 
 	{
 		cout << animalName << " goes: BARK! BARK!" << endl;
 	}
@@ -97,7 +123,7 @@ public:
 	Wolf(string n) : Canine(n) {};
 
 	//functions
-	void makeSound(void)
+	void animalSound(void)
 	{
 		cout << animalName << " goes: AWOOOOO!" << endl;
 	}
@@ -115,7 +141,7 @@ public:
 	Feline(string n) : Animal(n) {};
 
 	//functions
-	void makeSound(void) 
+	void animalSound(void) 
 	{
 		cout << animalName << " goes: GRRRR!" << endl;
 	}
@@ -133,7 +159,7 @@ public:
 	Lion(string n) : Feline(n) {};
 
 	//functions
-	void makeSound(void) 
+	void animalSound(void) 
 	{
 		cout << animalName << " goes: ROAR!" << endl;
 	}
@@ -151,12 +177,15 @@ public:
 	Cat(string n) : Feline(n) {};
 
 	//functions
-	void makeSound(void)
+	void animalSound(void)
 	{
 		cout << animalName << " goes: MEOW! MEOW!" << endl;
 	}
 
 };
+
+//global variables
+int userChoice;
 
 //functions
 void userSelect(int x) 
@@ -166,21 +195,65 @@ void userSelect(int x)
 	case 1: {
 		cout << "Animal class attributes: \n";
 		//creates object
-		Animal animalObj("an animal");
+		Animal* animalObj = new Animal("an animal");
 
-		//prints obects attributes (including inherited attributes)
-		cout << "This is: " << animalObj.getName() << endl;
-		animalObj.makeSound();
+		//prints obects attributes
+		animalObj->getAnimalName();
+		animalObj->makeAnimalSound();
+
+		delete animalObj;
+		break;
 	}
 	case 2: {
 		cout << "Canine class attributes: \n";
+		//creates object
+		Canine* canineObj = new Canine("a canine");
+
+		//prints objects attributes (including inherited attributes)
+		canineObj->getAnimalName();
+		canineObj->makeAnimalSound();
+		canineObj->getGeneralInfo();
+		canineObj->getCanineFunFact();
+		canineObj->getPhysicalDescription();
+
+		delete canineObj;
+		break;
+	}
+	case 3: {
+		cout << "Dog Class Attributes: \n";
+		//creates object
+		Dog* dogObj = new Dog("a dog");
+
+		//prints objects attributes (including inherited attributes)
+		dogObj->getAnimalName();
+		dogObj->makeAnimalSound();
+		dogObj->getGeneralInfo();
+		dogObj->getCanineFunFact();
+		dogObj->getPhysicalDescription();
+		
+
+		delete dogObj;
+		break;
+	}
+	case 4: {
+		
+	}
+	case 5: {
+		
+	}
+	case 6: {
+		
+	}
+	case 7: {
+		
+	}
+	case 8: {
+		cout << "Exiting Program..." << endl;
+		exit(1);
 	}
 
 	}
 
-	//creates object
-	//prints objects attributes
-	//deletes object
 }
 
 //main method
@@ -188,33 +261,39 @@ int main(void) {
 	
 	//variables
 	char userAnswer;
-	int userChoice;
+	
 
 	//do-while loop allowing the user to list all the different objects or exit the program
 	do 
 	{
 		
 		//entry section
-		cout << "Select which class's attributes you would like to view: " << endl;
+		cout << "Select which class's attributes you would like to view: \n" << endl;
 
 		//list classes
-		cout << "\t AVAILABLE CLASSES \t\n";
-		cout << "___________________________________\n";
-		cout << "1. Animal\n";
-		cout << "2. Canine\n";
-		cout << "3. Dog\n";
-		cout << "4. Wolf\n";
-		cout << "5. Feline\n";
-		cout << "6. Lion\n";
-		cout << "7. Cat\n";
-		cout << "8. EXIT\n";
+		cout << "---------------------\n";
+		cout << "| AVAILABLE CLASSES |\n";
+		cout << "---------------------\n";
+		cout << "| 1. Animal         |\n";
+		cout << "| 2. Canine         |\n";
+		cout << "| 3. Dog            |\n";
+		cout << "| 4. Wolf           |\n";
+		cout << "| 5. Feline         |\n";
+		cout << "| 6. Lion           |\n";
+		cout << "| 7. Cat            |\n";
+		cout << "| 8. EXIT           |\n";
+		cout << "---------------------\n\n";
+
+		cin >> userChoice;
 
 		userSelect(userChoice);
 
 		//ask user if they want to view other class attributes
-		cout << "Would you like to view another classes attributes?\n";
+		cout << "\nWould you like to view another classes attributes?\n";
 		cin >> userAnswer;
 
 	} while (userAnswer == 'y' || userAnswer == 'Y');
 
+
+	return 0;
 }
